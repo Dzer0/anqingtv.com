@@ -11,14 +11,14 @@ import urllib2
 import requests
 
 oss_accesskey = os.getenv('oss_accesskey')
-oss_accesskey_secret = os.getenv('oss_accesskey')
-oss_bucket_name = os.getenv('oss_accesskey')
+oss_accesskey_secret = os.getenv('oss_accesskey_secret')
+oss_bucket_name = os.getenv('oss_bucket_name')
 
-mysqlUser = os.getenv('oss_accesskey')
-mysqlPwd = os.getenv('oss_accesskey')
-mysqlUrl = os.getenv('oss_accesskey')
-mysqlPort = os.getenv('oss_accesskey')
-mysqlDatabasename = os.getenv('oss_accesskey')
+mysqlUser = os.getenv('mysqlUser')
+mysqlPwd = os.getenv('mysqlPwd')
+mysqlUrl = os.getenv('mysqlUrl')
+mysqlPort = os.getenv('mysqlPort')
+mysqlDatabasename = os.getenv('mysqlDatabasename')
 
 def Upload_oss_get_url(image_url,id):
     '''
