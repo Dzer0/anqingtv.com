@@ -49,15 +49,18 @@ def GetMySQLdbInfo(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename):
     cursor.execute(get_new_id_sql)
     new_id = cursor.fetchall()[0][0]
     print new_id
-    # get all imgurl sql
-    get_all_imgurl_sql = 'select * from mac_vod LIMIT ' + \
-    str(old_id) + ',' + str(new_id)+';'
-    print get_all_imgurl_sql
-    cursor.execute(get_all_imgurl_sql)
-    results = cursor.fetchall()
-    # update old id
-    update_old_id_sql = 'update history set old_id=%s where od=1' %new_id
-    cursor.execute(update_old_id_sql)
+    if old_id >=new_id:
+        results = False
+    else:
+        # get all imgurl sql
+        get_all_imgurl_sql = 'select * from mac_vod LIMIT ' + \
+        str(old_id) + ',' + str(new_id)+';'
+        print get_all_imgurl_sql
+        cursor.execute(get_all_imgurl_sql)
+        results = cursor.fetchall()
+        # update old id
+        update_old_id_sql = 'update history set old_id=%s where od=1' %new_id
+        cursor.execute(update_old_id_sql)
     db.commit()
     db.close()
     return results
@@ -80,13 +83,19 @@ def UpdateDataBase(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename,new_img_url,new
 if __name__ == '__main__':
     print 'Python Run Path %s' % os.getcwd()
     results = GetMySQLdbInfo(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename)
-    for i in results:
-        if i[6]:
-            print i[0],i[6]
-            #DownloadImage_updatedatabse(i[0],i[6])
-            Upload_oss_get_url(i[6],i[0])
-            new_img_url = 'http://oss.zhizhebuyan.com/anqingtv.com' + str(urlparse.urlparse(i[6]).path)
-            print new_img_url
-            UpdateDataBase(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename,new_img_url,i[0])
-        else:
-            print 'pic no found'
+    if results:
+        for i in results:
+            if i[6]:
+                print i[0],i[6]
+                #DownloadImage_updatedatabse(i[0],i[6])
+                try:
+                    Upload_oss_get_url(i[6],i[0])
+                    new_img_url = 'http://oss.zhizhebuyan.com/anqingtv.com' + str(urlparse.urlparse(i[6]).path)
+                    print new_img_url
+                    UpdateDataBase(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename,new_img_url,i[0])
+                except Exception as e:
+                    print e
+            else:
+                print 'pic no found'
+    else:
+        print 'No update moive End!!!'
