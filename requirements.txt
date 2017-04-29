@@ -1,0 +1,2 @@
+MySQL-python==1.2.4
+oss2==2.3.0
