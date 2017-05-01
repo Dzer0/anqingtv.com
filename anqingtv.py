@@ -27,6 +27,7 @@ def Upload_oss_get_url(image_url,id):
     '''
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; \
     en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
+    # 这个地方不具备通用性，还需要修改,暂时先这样，后面在对此处进行修改
     if urlparse.urlparse(image_url).query :
         new_url = urlparse.urlparse(image_url).query.split('=')[1]
         img_name = 'anqingtv.com' + urlparse.urlparse(new_url).path
