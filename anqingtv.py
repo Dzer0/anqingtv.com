@@ -53,8 +53,9 @@ def GetMySQLdbInfo(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename):
         results = False
     else:
         # get all imgurl sql
-        get_all_imgurl_sql = 'select * from mac_vod LIMIT ' + \
-        str(old_id) + ',' + str(new_id)+';'
+        #get_all_imgurl_sql = 'select * from mac_vod LIMIT ' + \
+        #str(old_id) + ',' + str(new_id)+';'
+        get_all_imgurl_sql = 'select * from mac_vod where d_id > %s ' %str(old_id)
         print get_all_imgurl_sql
         cursor.execute(get_all_imgurl_sql)
         results = cursor.fetchall()
