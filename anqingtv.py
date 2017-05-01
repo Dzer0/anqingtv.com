@@ -27,9 +27,11 @@ def Upload_oss_get_url(image_url,id):
     '''
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; \
     en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
-    img_name = 'anqing.com' + urlparse.urlparse(image_url).path
     if urlparse.urlparse(image_url).query :
-        img_name = img_name +'.jpg'
+        new_url = urlparse.urlparse(image_url).query.split('=')[1]
+        img_name = 'anqing.com' + urlparse.urlparse(new_url).path
+    else:
+        img_name = 'anqing.com' + urlparse.urlparse(image_url).path
     endpoint = 'http://oss-cn-hangzhou.aliyuncs.com'
     auth = oss2.Auth(oss_accesskey, oss_accesskey_secret)
     bucket = oss2.Bucket(auth, endpoint, oss_bucket_name)
