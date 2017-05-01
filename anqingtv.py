@@ -29,9 +29,9 @@ def Upload_oss_get_url(image_url,id):
     en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
     if urlparse.urlparse(image_url).query :
         new_url = urlparse.urlparse(image_url).query.split('=')[1]
-        img_name = 'anqing.com' + urlparse.urlparse(new_url).path
+        img_name = 'anqingtv.com' + urlparse.urlparse(new_url).path
     else:
-        img_name = 'anqing.com' + urlparse.urlparse(image_url).path
+        img_name = 'anqingtv.com' + urlparse.urlparse(image_url).path
     endpoint = 'http://oss-cn-hangzhou.aliyuncs.com'
     auth = oss2.Auth(oss_accesskey, oss_accesskey_secret)
     bucket = oss2.Bucket(auth, endpoint, oss_bucket_name)
