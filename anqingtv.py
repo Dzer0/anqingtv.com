@@ -29,19 +29,20 @@ def Upload_oss_get_url(image_url,id):
     en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
     # no support china
     if urlparse.urlparse(image_url).query :
-        new_url = urlparse.urlparse(image_url).query.split('=')[1]
+        new_url = urlparse.urlparse(image_url).query.split('=')[-1]
         img_name = urlparse.urlparse(new_url).path
         if '.' in img_name:
             img_name =  'oss' + img_name
         else:
             img_name = 'oss' + img_name + '.jpg'
     else:
+        new_url = image_url
         img_name = 'oss' + urlparse.urlparse(image_url).path
     endpoint = 'http://oss-cn-hangzhou.aliyuncs.com'
     auth = oss2.Auth(oss_accesskey, oss_accesskey_secret)
     bucket = oss2.Bucket(auth, endpoint, oss_bucket_name)
     #oss2.resumable_upload(bucket, img_name, path)
-    input = requests.get(image_url ,headers = headers,timeout=5)
+    input = requests.get(new_url ,headers = headers,timeout=5)
     bucket.put_object(img_name, input)
     return img_name
 
