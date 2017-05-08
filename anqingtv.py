@@ -27,10 +27,14 @@ def Upload_oss_get_url(image_url,id):
     '''
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; \
     en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
-    # no support china 
+    # no support china
     if urlparse.urlparse(image_url).query :
         new_url = urlparse.urlparse(image_url).query.split('=')[1]
         img_name = 'anqingtv.com' + urlparse.urlparse(new_url).path
+        if '.' in img_name:
+            print img_name
+        else:
+            img_name = img_name + '.jpg
     else:
         img_name = 'anqingtv.com' + urlparse.urlparse(image_url).path
     endpoint = 'http://oss-cn-hangzhou.aliyuncs.com'
@@ -95,10 +99,13 @@ if __name__ == '__main__':
                 print i[0],i[6]
                 #DownloadImage_updatedatabse(i[0],i[6])
                 try:
-                    Upload_oss_get_url(i[6],i[0])
-                    new_img_url = 'http://oss.zhizhebuyan.com/anqingtv.com' + str(urlparse.urlparse(i[6]).path)
-                    print new_img_url
-                    UpdateDataBase(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename,new_img_url,i[0])
+                    if 'oss.zhizhebuyan.com' in i[6]:
+                        print('%s the updated.') %i[6]
+                    else:
+                        Upload_oss_get_url(i[6],i[0])
+                        new_img_url = 'http://oss.zhizhebuyan.com/anqingtv.com' + str(urlparse.urlparse(i[6]).path)
+                        print new_img_url
+                        UpdateDataBase(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename,new_img_url,i[0])
                 except Exception as e:
                     print e
             else:
