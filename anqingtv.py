@@ -43,7 +43,7 @@ def Upload_oss_get_url(image_url,id):
     #oss2.resumable_upload(bucket, img_name, path)
     input = requests.get(image_url ,headers = headers,timeout=5)
     bucket.put_object(img_name, input)
-    return True
+    return img_name
 
 def GetMySQLdbInfo(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename):
     db = MySQLdb.connect(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename)
@@ -99,11 +99,11 @@ if __name__ == '__main__':
                 print i[0],i[6]
                 #DownloadImage_updatedatabse(i[0],i[6])
                 try:
-                    if 'oss.zhizhebuyan.com' in i[6]:
+                    if 'oss.anqingtv.com' in i[6]:
                         print('%s the updated.') %i[6]
                     else:
-                        Upload_oss_get_url(i[6],i[0])
-                        new_img_url = 'http://oss.zhizhebuyan.com/anqingtv.com' + str(urlparse.urlparse(i[6]).path)
+                        new_img_url = 'http://oss.anqingtv.com/' + Upload_oss_get_url(i[6],i[0])
+                        # new_img_url = 'http://oss.anqingtv.com/oss' + str(urlparse.urlparse(i[6]).path)
                         print new_img_url
                         UpdateDataBase(mysqlUrl,mysqlUser,mysqlPwd,mysqlDatabasename,new_img_url,i[0])
                 except Exception as e:
