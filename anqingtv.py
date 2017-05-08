@@ -30,13 +30,13 @@ def Upload_oss_get_url(image_url,id):
     # no support china
     if urlparse.urlparse(image_url).query :
         new_url = urlparse.urlparse(image_url).query.split('=')[1]
-        img_name = 'anqingtv.com' + urlparse.urlparse(new_url).path
+        img_name = urlparse.urlparse(new_url).path
         if '.' in img_name:
-            print img_name
+            img_name =  'oss' + img_name
         else:
-            img_name = img_name + '.jpg'
+            img_name = 'oss' + img_name + '.jpg'
     else:
-        img_name = 'anqingtv.com' + urlparse.urlparse(image_url).path
+        img_name = 'oss' + urlparse.urlparse(image_url).path
     endpoint = 'http://oss-cn-hangzhou.aliyuncs.com'
     auth = oss2.Auth(oss_accesskey, oss_accesskey_secret)
     bucket = oss2.Bucket(auth, endpoint, oss_bucket_name)
