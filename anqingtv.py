@@ -34,7 +34,7 @@ def Upload_oss_get_url(image_url,id):
         if '.' in img_name:
             print img_name
         else:
-            img_name = img_name + '.jpg
+            img_name = str(img_name) + '.jpg
     else:
         img_name = 'anqingtv.com' + urlparse.urlparse(image_url).path
     endpoint = 'http://oss-cn-hangzhou.aliyuncs.com'
